@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Service = require('../model/service-model');
+const signUpSchema = require("../service-validation")
+const validate = require("../middleware/service-middleware")
+
 
 // Add a new service
-router.post('/services', async (req, res) => {
+router.post('/services',validate(signUpSchema), async (req, res) => {
   try {
     const service = new Service(req.body);
     await service.save();
